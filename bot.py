@@ -1,3 +1,4 @@
+import os
 import asyncio
 import json
 import discord
@@ -69,4 +70,10 @@ async def reload(*, module: str):
     else:
         await bot.say('Okay, {} reloaded.'.format(module))
 
-bot.run(json.load(open('config.json'))["token"])
+try:
+    token = json.load(open('config.json'))["token"]
+# for travis-ci
+except FileNotFoundError as e:
+    token = os.environ['TOKEN']
+finally:
+    bot.run(token)
