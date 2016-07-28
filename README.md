@@ -1,5 +1,7 @@
 ![epicord-bot](https://a.desu.sh/tnzrlj.png)
 
+[![Build Status](https://travis-ci.org/EpicordBot/epicord-bot.svg?branch=master)](https://travis-ci.org/EpicordBot/epicord-bot)[![PEP8](https://img.shields.io/badge/PEP8-compliant-brightgreen.svg)](https://www.python.org/dev/peps/pep-0008/)
+
 A flexible Discord bot for the Epicord server, created in the advent of BooBot's demise.
 
 ## Project Goals:
