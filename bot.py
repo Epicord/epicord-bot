@@ -1,7 +1,8 @@
+# NOQA
 import os
 import asyncio
 import json
-import discord
+import discord  # NOQA
 from discord.ext import commands
 from cogs.utils import checks
 
@@ -14,6 +15,7 @@ exts = ['']
 
 @bot.event
 async def on_ready():
+    """Print ready messages."""
     print('Logged in {}#{} id:{}'.format(bot.user.name, bot.user.discriminator,
                                          bot.user.id))
     for extension in exts:
@@ -27,13 +29,14 @@ async def on_ready():
 
 @bot.event
 async def on_message(m):
+    """Event called when a message is received."""
     await bot.process_commands(m)
 
 
 @bot.command(hidden=True)
 @checks.is_owner()
 async def load(*, module: str):
-    """Loads a thing."""
+    """Load a cog."""
     module = module.strip()
     try:
         bot.load_extension(module)
@@ -46,7 +49,7 @@ async def load(*, module: str):
 @bot.command(hidden=True)
 @checks.is_owner()
 async def unload(*, module: str):
-    """Unloads a thing."""
+    """Unload a cog."""
     module = module.strip()
     try:
         bot.unload_extension(module)
@@ -59,7 +62,7 @@ async def unload(*, module: str):
 @bot.command(hidden=True)
 @checks.is_owner()
 async def reload(*, module: str):
-    """Reloads a thing."""
+    """Reload a cog."""
     module = module.strip()
     try:
         bot.unload_extension(module)
