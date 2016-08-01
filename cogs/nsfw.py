@@ -33,17 +33,18 @@ class NSFW:
                 selected_post = choice(posts)
 
                 if selected_post["file_ext"] in ["swf", "webm"]:
-                    file_url = ""
+                    e621_message = "https://e621.net/post/show/{}".format(
+                        selected_post["id"]
+                    )
                 else:
-                    file_url = selected_post["file_url"], "\n"
+                    e621_message = "{}\nhttps://e621.net/post/show/{}".format(
+                            selected_post["file_url"],
+                            selected_post["id"]
+                        )
+                await self.bot.say(e621_message)
 
-                await self.bot.say("{}https://e621.net/post/show/{}".format(
-                    file_url,
-                    selected_post["id"]
-                ))
             except IndexError:
                 await self.bot.say("Sorry, no results.")
-
 
 
 def setup(bot):
