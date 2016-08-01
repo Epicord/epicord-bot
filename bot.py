@@ -1,7 +1,7 @@
 # NOQA
-import os
 import asyncio
 import json
+import os
 import discord  # NOQA
 from discord.ext import commands
 from cogs.utils import checks
@@ -10,7 +10,7 @@ from cogs.utils import checks
 bot = commands.Bot(command_prefix='~', description='''
                    EpicordBot - created in the advent of BooBot's demise.
                    ''', pm_help=None, help_attrs=dict(hidden=True))
-exts = ['']
+exts = ['cogs.nsfw']
 
 
 @bot.event
