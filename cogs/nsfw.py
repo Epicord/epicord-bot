@@ -29,11 +29,14 @@ class NSFW:
                 params=payload
             )
             posts = json.loads(e621_response.text)
-            selected_post = choice(posts)
-            await self.bot.say("{}\nhttps://e621.net/post/show/{}".format(
-                selected_post["file_url"],
-                selected_post["id"]
-            ))
+            try:
+                selected_post = choice(posts)
+                await self.bot.say("{}\nhttps://e621.net/post/show/{}".format(
+                    selected_post["file_url"],
+                    selected_post["id"]
+                ))
+            except IndexError:
+                await self.bot.say("Sorry, no results.")
 
 
 
