@@ -31,8 +31,14 @@ class NSFW:
             posts = json.loads(e621_response.text)
             try:
                 selected_post = choice(posts)
-                await self.bot.say("{}\nhttps://e621.net/post/show/{}".format(
-                    selected_post["file_url"],
+
+                if selected_post["file_ext"] in ["swf", "webm"]:
+                    file_url = ""
+                else:
+                    file_url = selected_post["file_url"], "\n"
+
+                await self.bot.say("{}https://e621.net/post/show/{}".format(
+                    file_url,
                     selected_post["id"]
                 ))
             except IndexError:
