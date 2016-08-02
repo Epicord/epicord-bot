@@ -42,7 +42,11 @@ class NSFW:
                         selected_post["id"]
                     )
                 else:
-                    e621_message = "{}\n<https://e621.net/post/show/{}>".format(
+                    e621_message = """Found `{}` results for `{}` tags
+{}
+<https://e621.net/post/show/{}>""".format(
+                            len(posts),
+                            len(tags),
                             selected_post["file_url"],
                             selected_post["id"]
                         )
@@ -50,7 +54,6 @@ class NSFW:
 
             except IndexError:
                 await self.bot.say("Sorry, no results.")
-
 
     @commands.command()
     async def gelbooru(self, *tags: str):
@@ -71,7 +74,8 @@ class NSFW:
         try:
             selected_post = root[randrange(len(root))]
 
-            await self.bot.say("{}\n<http://gelbooru.com/index.php?page=post&s=view&id={}>".format(
+            await self.bot.say("""{}
+<http://gelbooru.com/index.php?page=post&s=view&id={}>""".format(
                 selected_post.attrib["file_url"],
                 selected_post.attrib["id"]
             ))
