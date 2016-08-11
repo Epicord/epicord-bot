@@ -16,13 +16,12 @@ class General:
         """
         Selects one of the choices passed at random
         """
-        choice_list = " ".join(choices).split(",")
+        choice_list = " ".join(choices).split(";")
         choice_str = ""
         for cur in choice_list:
             choice_str += "`{}` ".format(cur)
 
-        await self.bot.say("""{0.message.author.mention} is deciding between:
-{1}
+        await self.bot.say("""{0.message.author.mention} is deciding between: {1}
 
 I choose: {2}!""".format(
             ctx,
