@@ -15,7 +15,7 @@ class NSFW:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group()
+    @commands.command()
     async def e621(self, *tags: str):
         """
         All the best furry porn! (and best porn in general obvsly)
@@ -55,7 +55,7 @@ class NSFW:
             except IndexError:
                 await self.bot.say("Sorry, no results.")
 
-    @commands.group()
+    @commands.command()
     async def gelbooru(self, *tags: str):
         """
         For all your non-furry porn needs
@@ -82,7 +82,7 @@ class NSFW:
         except (IndexError, ValueError):
             await self.bot.say("Sorry, no results.")
 
-    @commands.group()
+    @commands.command()
     async def rule34(self, *tags: str):
         """
         For all your non-furry porn needs - Part 2!
