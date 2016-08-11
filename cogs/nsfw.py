@@ -15,10 +15,10 @@ class NSFW:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.group()
     async def e621(self, *tags: str):
         """
-        Retrieves a post based on tags and returns a random image from e621
+        All the best furry porn! (and best porn in general obvsly)
         """
         if len(tags) > 6:
             await self.bot.say("Sorry, e621 has a 6 tag maximum.")
@@ -55,7 +55,7 @@ class NSFW:
             except IndexError:
                 await self.bot.say("Sorry, no results.")
 
-    @commands.command()
+    @commands.group()
     async def gelbooru(self, *tags: str):
         """
         For all your non-furry porn needs
@@ -77,6 +77,33 @@ class NSFW:
             await self.bot.say("""{}
 <http://gelbooru.com/index.php?page=post&s=view&id={}>""".format(
                 selected_post.attrib["file_url"],
+                selected_post.attrib["id"]
+            ))
+        except (IndexError, ValueError):
+            await self.bot.say("Sorry, no results.")
+
+    @commands.group()
+    async def rule34(self, *tags: str):
+        """
+        For all your non-furry porn needs - Part 2!
+        """
+        payload = {
+            "limit": 100,
+            "tags": " ".join(tags)
+        }
+        r34 = requests.get(
+            "http://rule34.xxx/index.php?page=dapi&s=post&q=index",
+            params=payload
+        )
+
+        root = ET.fromstring(r34.text)
+
+        try:
+            selected_post = root[randrange(len(root))]
+
+            await self.bot.say("""{}
+<http://rule34.xxx/index.php?page=post&s=view&id={}>""".format(
+                "http:{}".format(selected_post.attrib["file_url"]),
                 selected_post.attrib["id"]
             ))
         except (IndexError, ValueError):
