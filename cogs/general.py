@@ -29,6 +29,34 @@ I choose: {2}!""".format(
             random.choice(choice_list)
         ))
 
+    @commands.command(pass_context=True)
+    async def eball(self, ctx, *ask: str):
+        """
+        Replies to question with an emoji
+        """
+        the_e_list = [
+            ":heart_eyes_cat:",
+            ":revolving_hearts:",
+            ":confounded:",
+            ":expressionless:",
+            ":smirk_cat:",
+            ":no_entry_sign:",
+            ":thumbsdown:",
+            ":thumbsup:",
+            ":ballot_box_with_check:",
+            ":cool:",
+            ":sweat_drops:",
+            ":fire:",
+            "::ok_hand:",
+            ":middle_finger:",
+        ]
+
+        quote = "`{}`".format(" ".join(ask))
+
+        await self.bot.say("""{0.message.author.mention} {1}\n{2}""".format(
+            ctx, quote, random.choice(the_e_list)
+        ))
+
 
 def setup(bot):
     bot.add_cog(General(bot))
