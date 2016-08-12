@@ -11,8 +11,8 @@ class General:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["choose"], pass_context=True)
-    async def choice(self, ctx, *choices: str):
+    @commands.command(aliases=["choose"])
+    async def choice(self, *choices: str):
         """
         Selects one of the choices passed at random
         """
@@ -21,16 +21,12 @@ class General:
         for cur in choice_list:
             choice_str += "`{}` ".format(cur)
 
-        await self.bot.say("""{0.message.author.mention} is deciding between: {1}
+        await self.bot.reply("""is deciding between: {}
 
-I choose: {2}!""".format(
-            ctx,
-            choice_str,
-            random.choice(choice_list)
-        ))
+I choose: {}!""".format(choice_str, random.choice(choice_list)))
 
-    @commands.command(pass_context=True)
-    async def eball(self, ctx, *ask: str):
+    @commands.command()
+    async def eball(self, *ask: str):
         """
         Replies to question with an emoji
         """
@@ -53,8 +49,8 @@ I choose: {2}!""".format(
 
         quote = "`{}`".format(" ".join(ask))
 
-        await self.bot.say("""{0.message.author.mention} {1}\n{2}""".format(
-            ctx, quote, random.choice(the_e_list)
+        await self.bot.reply("""{}\n{}""".format(
+            quote, random.choice(the_e_list)
         ))
 
 
