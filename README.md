@@ -18,8 +18,8 @@ A flexible Discord bot for the Epicord server, created in the advent of BooBot's
     - [ ] Some other cool stuff I dunno
   - [ ] Featherbot
     - [x] 8/e-ball
-    - [ ] NSFW commands
-      - [ ] Pokep ( ͡° ͜ʖ ͡°)
+    - [x] NSFW commands
+      - [x] Pokep ( ͡° ͜ʖ ͡°)
   - [ ] Boobot
     - [ ] Custom command functionality
     - [ ] Reminders
