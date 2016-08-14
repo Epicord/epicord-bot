@@ -16,12 +16,14 @@ A flexible Discord bot for the Epicord server, created in the advent of BooBot's
     - [ ] TTR Invasion tracker
       - [ ] Maybe more TTR info
     - [ ] Some other cool stuff I dunno
-  - [ ] Featherbot
-    - [ ] 8/e-ball
-    - [ ] NSFW commands
-      - [ ] Pokep ( ͡° ͜ʖ ͡°)
+  - [x] Featherbot
+    - [x] 8/e-ball
+    - [x] NSFW commands
+      - [x] Pokep ( ͡° ͜ʖ ͡°)
   - [ ] Boobot
     - [ ] Custom command functionality
+    - [ ] Reminders
+    - [ ] Port commands (like ~roll)
 - [ ] General
   - [ ] PEP8 compliance
   - [ ] Looks cool

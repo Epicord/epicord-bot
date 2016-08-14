@@ -3,7 +3,11 @@ import discord.utils
 
 
 def is_owner_check(message):
-    return message.author.id == '113442380811649024'
+    owners = ['113442380811649024',  # Prappe
+              '112760500130975744',  # Minimus
+              '112890272819507200'  # Wing
+              ]
+    return (message.author.id in owners)
 
 
 def is_owner():
@@ -65,7 +69,3 @@ def is_in_servers(*server_ids):
             return False
         return server.id in server_ids
     return commands.check(predicate)
-
-
-def is_lounge_cpp():
-    return is_in_servers('145079846832308224')
