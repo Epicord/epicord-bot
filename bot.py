@@ -10,7 +10,7 @@ from cogs.utils import checks
 bot = commands.Bot(command_prefix='~', description='''
                    EpicordBot - created in the advent of BooBot's demise.
                    ''', pm_help=None, help_attrs=dict(hidden=True))
-exts = ['cogs.nsfw', 'cogs.8x', 'cogs.general', 'cogs.ttrinv']
+exts = ['cogs.nsfw', 'cogs.general', 'cogs.ttrinv']
 
 
 @bot.event
@@ -66,7 +66,7 @@ async def reload(*, module: str):
     module = module.strip()
     try:
         bot.unload_extension(module)
-        await asyncio.sleep(3)
+        await asyncio.sleep(1)
         bot.load_extension(module)
     except Exception as e:
         await bot.say('Ouch.\n{}: {}'.format(type(e).__name__, e))
