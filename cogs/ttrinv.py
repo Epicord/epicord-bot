@@ -24,7 +24,7 @@ class TTRInv:
         print("Invasions refreshed:", time)
         # await asyncio.sleep(60)
         if self.bot.get_cog('TTRInv') is not None:
-            self.loop.call_later(5, self.refresh)
+            self.loop.call_later(60, self.refresh)
 
     @commands.command()
     async def inv(self):
