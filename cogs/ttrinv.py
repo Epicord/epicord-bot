@@ -14,16 +14,17 @@ class TTRInv:
     def __init__(self, bot):
         """Constructor."""
         self.bot = bot
-        asyncio.ensure_future(self.refresh())
+        self.loop = asyncio.get_event_loop()
+        self.loop.call_soon(self.refresh)
 
-    async def refresh(self):
+    def refresh(self):
         """Re-request the invasion info."""
         self.inv_json = requests.get(url)
         time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
         print("Invasions refreshed:", time)
-        await asyncio.sleep(60)
+        # await asyncio.sleep(60)
         if self.bot.get_cog('TTRInv') is not None:
-            asyncio.ensure_future(self.refresh())
+            self.loop.call_later(5, self.refresh)
 
     @commands.command()
     async def inv(self):
