@@ -10,7 +10,7 @@ from cogs.utils import checks
 bot = commands.Bot(command_prefix='~', description='''
                    EpicordBot - created in the advent of BooBot's demise.
                    ''', pm_help=None, help_attrs=dict(hidden=True))
-exts = ['cogs.nsfw', 'cogs.8x', 'cogs.general']
+exts = ['cogs.nsfw', 'cogs.8x', 'cogs.general, cogs.ttrinv']
 
 
 @bot.event
