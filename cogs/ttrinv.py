@@ -6,6 +6,7 @@ import requests
 from datetime import datetime
 
 url = 'http://www.toontownrewritten.com/api/invasions'
+loop = asyncio.get_event_loop()
 
 
 class TTRInv:
@@ -14,8 +15,7 @@ class TTRInv:
     def __init__(self, bot):
         """Constructor."""
         self.bot = bot
-        self.loop = asyncio.get_event_loop()
-        self.loop.call_soon(self.refresh)
+        loop.call_soon(self.refresh)
 
     def refresh(self):
         """Re-request the invasion info."""
@@ -29,7 +29,7 @@ class TTRInv:
 
         # await asyncio.sleep(60)
         if self.bot.get_cog('TTRInv') is not None:
-            self.loop.call_later(60, self.refresh)
+            loop.call_later(15, self.refresh)
 
     @commands.command()
     async def inv(self):
