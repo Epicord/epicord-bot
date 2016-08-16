@@ -41,9 +41,10 @@ async def load(*, module: str):
     try:
         bot.load_extension(module)
     except Exception as e:
-        await bot.say('Ouch.\n{}: {}'.format(type(e).__name__, e))
+        await bot.say('Failed to load.\n{}: {}'.format(type(e).__name__, e))
     else:
         await bot.say('Got it, {} loaded.'.format(module))
+        print("{0} loaded.".format(module))
 
 
 @bot.command(hidden=True)
@@ -60,6 +61,7 @@ async def unload(*, module: str):
             await bot.say('Ouch.\n{}: {}'.format(type(e).__name__, e))
         else:
             await bot.say('Alright, {} unloaded.'.format(module))
+            print("{0} unloaded.".format(module))
 
 
 @bot.command(hidden=True)
@@ -75,6 +77,7 @@ async def reload(*, module: str):
         await bot.say('Ouch.\n{}: {}'.format(type(e).__name__, e))
     else:
         await bot.say('Okay, {} reloaded.'.format(module))
+        print("{0} reloaded.".format(module))
 
 try:
     token = json.load(open('config.json'))["token"]
