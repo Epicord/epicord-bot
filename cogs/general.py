@@ -135,6 +135,14 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
         time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
         print("Anilist authentication refreshed:", time)
 
+    @commands.command(pass_context=True)
+    async def avatar(self, ctx):
+        """Returns mentioned user's avatar"""
+        if len(ctx.message.mentions) > 0:
+            await self.bot.say(ctx.message.mentions[0].avatar_url)
+        else:
+            await self.bot.say(ctx.message.author.avatar_url)
+
 
 def setup(bot):
     """Setup function."""
