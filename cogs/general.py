@@ -135,6 +135,19 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
         time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
         print("Anilist authentication refreshed:", time)
 
+    @commands.command()
+    async def roll(self, *n):
+        """
+        Rolls a random number
+        """
+        try:
+            x = int(n[0])
+        except Exception:
+            x = 100
+        finally:
+            y = random.randint(1, 100) if x < 1 else random.randint(1, x)
+            await self.bot.say('Rolling 1-{}: **{}**'.format(x, y))
+
     @commands.command(pass_context=True)
     async def avatar(self, ctx):
         """Returns mentioned user's avatar"""
