@@ -19,9 +19,14 @@ class TTRInv:
 
     def refresh(self):
         """Re-request the invasion info."""
-        self.inv_json = requests.get(url)
-        time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
-        print("Invasions refreshed:", time)
+        try:
+            self.inv_json = requests.get(url)
+            time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+            print("Invasions refreshed:", time)
+        except Exception as e:
+            error_msg = "Encountered {0} while attempting to refresh."
+            print(error_msg.format(type(e).__name__))
+
         # await asyncio.sleep(60)
         if self.bot.get_cog('TTRInv') is not None:
             self.loop.call_later(60, self.refresh)
