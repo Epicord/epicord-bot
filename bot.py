@@ -52,16 +52,13 @@ async def load(*, module: str):
 async def unload(*, module: str):
     """Unload a cog."""
     module = module.strip()
-    if bot.get_cog(module) is None:
-        await bot.say('Ouch.\nError: No module named \'{}\''.format(module))
+    try:
+        bot.unload_extension(module)
+    except Exception as e:
+        await bot.say('Ouch.\n{}: {}'.format(type(e).__name__, e))
     else:
-        try:
-            bot.unload_extension(module)
-        except Exception as e:
-            await bot.say('Ouch.\n{}: {}'.format(type(e).__name__, e))
-        else:
-            await bot.say('Alright, {} unloaded.'.format(module))
-            print("{0} unloaded.".format(module))
+        await bot.say('Alright, {} unloaded.'.format(module))
+        print("{0} unloaded.".format(module))
 
 
 @bot.command(hidden=True)
