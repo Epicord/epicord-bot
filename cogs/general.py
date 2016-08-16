@@ -1,4 +1,7 @@
+import asyncio
+from datetime import datetime
 import random
+import requests
 
 from discord.ext import commands
 from .utils import checks
@@ -10,6 +13,7 @@ class General:
     """
     def __init__(self, bot):
         self.bot = bot
+        asyncio.get_event_loop().call_soon(self._anime_auth)
 
     @commands.command(aliases=["choose"])
     async def choice(self, *choices: str):
@@ -91,6 +95,51 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
         """
         user = random.choice(list(self.bot.get_all_members())).display_name
         await self.bot.reply('`{}`: {}'.format(' '.join(q), user))
+
+    @commands.command()
+    async def anime(self, *anime_name: str):
+        """
+        Get details about an anime.
+        """
+        query = ' '.join(anime_name)
+        auth = {'access_token': self.anilist_auth['access_token']}
+        results = requests.get('http://anilist.co/api/anime/search/' + query,
+                               params=auth)
+        if type(results.json()) is not list:
+            await self.bot.say('Error: ' + ' '.join(
+                results.json()['error']['messages']))
+        else:
+            id = str(results.json()[0]['id'])
+            anime = requests.get('http://anilist.co/api/anime/' + id,
+                                 params=auth)
+            info = anime.json()
+            if info['title_english'] != info['title_romaji']:
+                name = '**{}** / {}'.format(info['title_romaji'],
+                                            info['title_english'])
+            else:
+                name = '**{}**'.format(info['title_romaji'])
+            await self.bot.say('{}\n{} Episodes - {}\n*{}*\n{}\n{}\n{}'.format(
+                name,
+                info['total_episodes'],
+                info['airing_status'].capitalize(),
+                info['description'].replace('<br>', ''),
+                info['classification'],
+                info['image_url_lge'],
+                'http://anilist.co/anime/' + str(info['id'])))
+
+    def _anime_auth(self):
+        payload = {
+            'grant_type': 'client_credentials',
+            'client_id': 'prappe-o3oux',
+            'client_secret': 'Pvpm2wJ0qMTOKnLZoOq49RPFqCLF'
+        }
+        anime = requests.post('http://anilist.co/api/auth/access_token',
+                              params=payload)
+        self.anilist_auth = anime.json()
+        asyncio.get_event_loop().call_later(self.anilist_auth['expires_in'],
+                                            self._anime_auth)
+        time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+        print("Anilist authentication refreshed:", time)
 
 
 def setup(bot):
