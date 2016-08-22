@@ -20,7 +20,7 @@ class General:
         choice_list = " ".join(choices).split(";")
         choice_str = ""
         for cur in choice_list:
-            choice_str += "`{}` ".format(cur)
+            choice_str += "`{}`, ".format(cur)
 
         await self.bot.reply("""is deciding between: {}
 
