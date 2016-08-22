@@ -75,7 +75,10 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             'I don\'t know m8 ʅ(◔౪◔ ) ʃ',
             ':crystal_ball: The answer is not what you think.',
             '',
-            ''
+            '',
+            ':^)',
+            ':^(',
+            '>///<'
         ]
         await self.bot.reply('`{}`: {}'.format(' '.join(q),
                                                random.choice(answers)))
