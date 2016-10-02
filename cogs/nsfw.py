@@ -59,10 +59,17 @@ class NSFW:
     async def gelbooru(self, *tags: str):
         """
         For all your non-furry porn needs
+
+        Use 'no-preview' to disable image previews
         """
+        tags = " ".join(tags).split(" ")
+        no_preview = False
+        if "no-preview" in tags:
+            tags.remove("no-preview")
+            no_preview = True
         payload = {
             "limit": 100,
-            "tags": " ".join(tags)
+            "tags": tags
         }
         gelbooru = requests.get(
             "http://gelbooru.com//index.php?page=dapi&s=post&q=index",
@@ -73,10 +80,14 @@ class NSFW:
 
         try:
             selected_post = root[randrange(len(root))]
+            if no_preview:
+                direct_url = "<{}>".format(selected_post.attrib["file_url"])
+            else:
+                direct_url = "{}".format(selected_post.attrib["file_url"])
 
-            await self.bot.say("""<{}>
+            await self.bot.say("""{}
 <http://gelbooru.com/index.php?page=post&s=view&id={}>""".format(
-                selected_post.attrib["file_url"],
+                direct_url,
                 selected_post.attrib["id"]
             ))
         except (IndexError, ValueError):
