@@ -74,7 +74,7 @@ class NSFW:
         try:
             selected_post = root[randrange(len(root))]
 
-            await self.bot.say("""{}
+            await self.bot.say("""<{}>
 <http://gelbooru.com/index.php?page=post&s=view&id={}>""".format(
                 selected_post.attrib["file_url"],
                 selected_post.attrib["id"]
@@ -101,7 +101,7 @@ class NSFW:
         try:
             selected_post = root[randrange(len(root))]
 
-            await self.bot.say("""{}
+            await self.bot.say("""<{}>
 <http://rule34.xxx/index.php?page=post&s=view&id={}>""".format(
                 "http:{}".format(selected_post.attrib["file_url"]),
                 selected_post.attrib["id"]
