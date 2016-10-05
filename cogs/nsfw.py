@@ -98,6 +98,11 @@ class NSFW:
         """
         For all your non-furry porn needs - Part 2!
         """
+        tags = " ".join(tags).split(" ")
+        no_preview = False
+        if "no-preview" in tags:
+            tags.remove("no-preview")
+            no_preview = True
         payload = {
             "limit": 100,
             "tags": " ".join(tags)
@@ -111,10 +116,14 @@ class NSFW:
 
         try:
             selected_post = root[randrange(len(root))]
+            if no_preview:
+                direct_url = "<http:{}>".format(selected_post.attrib["file_url"])
+            else:
+                direct_url = "http:{}".format(selected_post.attrib["file_url"])
 
-            await self.bot.say("""<{}>
+            await self.bot.say("""{}
 <http://rule34.xxx/index.php?page=post&s=view&id={}>""".format(
-                "http:{}".format(selected_post.attrib["file_url"]),
+                direct_url,
                 selected_post.attrib["id"]
             ))
         except (IndexError, ValueError):
