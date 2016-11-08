@@ -74,8 +74,6 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             'No, absolutely not! :thumbsdown:',
             'I don\'t know m8 ʅ(◔౪◔ ) ʃ',
             ':crystal_ball: The answer is not what you think.',
-            '',
-            '',
             ':^)',
             ':^(',
             '>///<'
@@ -158,6 +156,14 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             await self.bot.say(ctx.message.mentions[0].avatar_url)
         else:
             await self.bot.say(ctx.message.author.avatar_url)
+
+    @commands.command(pass_context=True)
+    async def say(self, ctx):
+        """Repeats passed message"""
+        repeat = ctx.message.content[4:]
+        if repeat.startswith("~"):
+            print(repeat[1:])
+        await self.bot.say(repeat)
 
 
 def setup(bot):
