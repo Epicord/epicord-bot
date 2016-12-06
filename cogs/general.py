@@ -43,9 +43,7 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             ":sweat_drops:",
             ":fire:",
             ":ok_hand:",
-            ":middle_finger:",
-            ":hippo:",
-            ":vface:"
+            ":middle_finger:"
         ]
 
         quote = "`{}`".format(" ".join(ask))
@@ -94,6 +92,16 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
         """
         user = random.choice(list(self.bot.get_all_members())).display_name
         await self.bot.reply('`{}`: {}'.format(' '.join(q), user))
+
+    @commands.command(name='8usero')
+    async def eightusero(self, *q: str):
+        """Given a question, randomly select an online user."""
+        member_list = list(self.bot.get_all_members())
+        while True:
+            user = random.choice(member_list)
+            if user.status == user.status.online:
+                break
+        await self.bot.reply('`{}`: {}'.format(' '.join(q), user.display_name))
 
     @commands.command()
     async def anime(self, *anime_name: str):
