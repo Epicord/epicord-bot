@@ -44,6 +44,8 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             ":fire:",
             ":ok_hand:",
             ":middle_finger:",
+            ":hippo:",
+            ":vface:"
         ]
 
         quote = "`{}`".format(" ".join(ask))
