@@ -13,7 +13,7 @@ A flexible Discord bot for the Epicord server, created in the advent of BooBot's
     - [ ] XP System
       - [ ] Acually efficient leaderboards
   - [ ] NOVA
-    - [ ] TTR Invasion tracker
+    - [x] TTR Invasion tracker
       - [ ] Maybe more TTR info
     - [ ] Some other cool stuff I dunno
   - [x] Featherbot
