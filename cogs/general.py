@@ -1,9 +1,11 @@
 # NOQA
 import random
 import asyncio
-from datetime import datetime
+from datetime import datetime, date
 import requests
 from discord.ext import commands
+
+ORDMAX = date(2100, 12, 31).toordinal()
 
 
 class General:
@@ -103,6 +105,32 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
                 break
         await self.bot.reply('`{}`: {}'.format(' '.join(q), user.display_name))
 
+    @commands.command(name='8date')
+    async def eightdate(self, *args: str):
+        """Generate a random date."""
+        ord_today = date.today().toordinal()
+        arglist = "".join(args).split(" ")
+        yearlist = []
+        try:
+            for year in arglist:
+                yearlist.append(int(year))
+        except TypeError:
+            await self.bot.reply("Invalid arguments!?")
+        if (len(arglist) == 0):
+            await self.bot.reply(
+                date.fromordinal(random.randint(ord_today, ORDMAX)))
+        elif (len(arglist) == 1):
+            ord_argmax = date.toordinal(date(yearlist[0], 12, 31))
+            await self.bot.reply(
+                date.fromordinal(random.randint(ord_today, ord_argmax)))
+        elif len(arglist) == 2:
+            ord_argmin = date.toordinal(date(yearlist[0], 1, 1))
+            ord_argmax = date.toordinal(date(yearlist[1], 12, 31))
+            await self.bot.reply(
+                date.fromordinal(random.randint(ord_argmin, ord_argmax)))
+        else:
+            await self.bot.reply("Too many arguments!?")
+
     @commands.command()
     async def anime(self, *anime_name: str):
         """Get details about an anime."""
@@ -148,9 +176,7 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
 
     @commands.command()
     async def roll(self, *n):
-        """
-        Rolls a random number
-        """
+        """Roll a random number."""
         try:
             x = int(n[0])
         except Exception:
@@ -161,7 +187,7 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
 
     @commands.command(pass_context=True)
     async def avatar(self, ctx):
-        """Returns mentioned user's avatar"""
+        """Return mentioned user's avatar."""
         if len(ctx.message.mentions) > 0:
             await self.bot.say(ctx.message.mentions[0].avatar_url)
         else:
@@ -169,7 +195,7 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
 
     @commands.command(pass_context=True)
     async def say(self, ctx):
-        """Repeats passed message"""
+        """Repeat passed message."""
         repeat = ctx.message.content[4:]
         if repeat.startswith("~"):
             print(repeat[1:])
