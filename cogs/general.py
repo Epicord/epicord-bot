@@ -110,26 +110,20 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
         """Generate a random date."""
         ord_today = date.today().toordinal()
         ans = date.today()
-        words = False
         if len(args) > 0:
-            yearlist = []
-            try:
-                for year in args:
-                    yearlist.append(int(year))
-                for item in yearlist:
-                    if item > 9999 or item < 1:
-                        await self.bot.reply("ERROR: Years must be 1-9999.")
-            except (TypeError, ValueError):
-                words = True
-        if (len(args) == 0 or words):
+            yearlist = [int(x) for x in args if x.isdigit()]
+            for item in yearlist:
+                if item > 9999 or item < 1:
+                    await self.bot.reply("ERROR: Years must be 1-9999.")
+        if (len(yearlist) == 0):
             ans = date.fromordinal(random.randint(ord_today, ORDMAX))
-        elif (len(args) == 1 and not words):
+        elif (len(yearlist) == 1):
             ord_arg = date.toordinal(date(yearlist[0], 12, 31))
             if ord_arg < ord_today:
                 ans = date.fromordinal(random.randint(ord_arg, ord_today))
             else:
                 ans = date.fromordinal(random.randint(ord_today, ord_arg))
-        elif (len(args) == 2 and not words):
+        elif (len(yearlist) == 2):
             ord_argmin = date.toordinal(date(yearlist[0], 1, 1))
             ord_argmax = date.toordinal(date(yearlist[1], 12, 31))
             ans = date.fromordinal(random.randint(ord_argmin, ord_argmax))
