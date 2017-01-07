@@ -109,27 +109,32 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
     async def eightdate(self, *args: str):
         """Generate a random date."""
         ord_today = date.today().toordinal()
-        arglist = "".join(args).split(" ")
-        yearlist = []
-        try:
-            for year in arglist:
-                yearlist.append(int(year))
-        except TypeError:
-            await self.bot.reply("Invalid arguments!?")
-        if (len(arglist) == 0):
-            await self.bot.reply(
-                date.fromordinal(random.randint(ord_today, ORDMAX)))
-        elif (len(arglist) == 1):
-            ord_argmax = date.toordinal(date(yearlist[0], 12, 31))
-            await self.bot.reply(
-                date.fromordinal(random.randint(ord_today, ord_argmax)))
-        elif len(arglist) == 2:
+        ans = date.today()
+        words = False
+        if len(args) > 0:
+            yearlist = []
+            try:
+                for year in args:
+                    yearlist.append(int(year))
+                for item in yearlist:
+                    if item > 9999 or item < 1:
+                        await self.bot.reply("ERROR: Years must be 1-9999.")
+            except (TypeError, ValueError):
+                words = True
+        if (len(args) == 0 or words):
+            ans = date.fromordinal(random.randint(ord_today, ORDMAX))
+        elif (len(args) == 1 and not words):
+            ord_arg = date.toordinal(date(yearlist[0], 12, 31))
+            if ord_arg < ord_today:
+                ans = date.fromordinal(random.randint(ord_arg, ord_today))
+            else:
+                ans = date.fromordinal(random.randint(ord_today, ord_arg))
+        elif (len(args) == 2 and not words):
             ord_argmin = date.toordinal(date(yearlist[0], 1, 1))
             ord_argmax = date.toordinal(date(yearlist[1], 12, 31))
-            await self.bot.reply(
-                date.fromordinal(random.randint(ord_argmin, ord_argmax)))
-        else:
-            await self.bot.reply("Too many arguments!?")
+            ans = date.fromordinal(random.randint(ord_argmin, ord_argmax))
+
+        await self.bot.reply(ans.strftime("%b. %d, %Y"))
 
     @commands.command()
     async def anime(self, *anime_name: str):
