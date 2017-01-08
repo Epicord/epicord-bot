@@ -75,12 +75,21 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             'That\'s completely absurd.',
             'No, absolutely not! :thumbsdown:',
             'I don\'t know m8 ʅ(◔౪◔ ) ʃ',
-            ':crystal_ball: The answer is not what you think.',
+            'The answer is not what you think.',
             ':^)',
             ':^(',
             '>///<'
         ]
-        await self.bot.reply('`{}`: {}'.format(' '.join(q),
+        if q[0] == "strict":
+            answers = [
+                "Yes.",
+                "Absolutely.",
+                "Without a doubt.",
+                "No.",
+                "Absolutely not.",
+                "No chance."
+            ]
+        await self.bot.reply('`{}`: {}'.format(':crystal_ball: '.join(q),
                                                random.choice(answers)))
 
     @commands.command(name='8user',
