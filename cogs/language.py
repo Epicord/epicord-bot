@@ -1,6 +1,8 @@
 # NOQA
 import asyncio
 import requests
+from xml.etree import ElementTree
+from itertools import islice
 from discord.ext import commands
 
 
@@ -14,24 +16,31 @@ class Language:
     @commands.command()
     async def define(self, word: str):
         """Retrieve a definition of the word."""
-        app_id = "473851ca"
-        api_key = "2b647406bfc2fde85e8a6e641b094739"
+        api_key = "e02fb0b8-5f3e-4d5c-b868-87dd7de88974"
 
-        url = "https://od-api.oxforddictionaries.com:443/api/v1/entries/en/" + word.lower()
+        # Checks for mutliple words and only uses first
+        if " " in word:
+            word = word.split(" ")[0]
 
-        response = requests.get(url, headers={"app_id": app_id, "app_key": api_key})
+        url = "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/{}?key={}".format(word.lower(), api_key)
 
-        if response.status_code == 200:
-            results = response.json()["results"][0]["lexicalEntries"][0]
-            entries = results["entries"][0]["senses"][0]
+        response = requests.get(url)
+        results = ElementTree.fromstring(response.text)
+
+        for entry in islice(results, 0, 3):
+            if entry.tag == "suggestion":
+                await self.bot.say("That's not a word")
+                break
+            word = entry.find("ew").text
+            word_type = entry.find("fl").text
+            word_def = entry.find("def").find("dt").text
+
+            if word_type == "adverb":
+                word_def = entry.find("def").findall("dt")[1].text
 
             await self.bot.say("**{}**\n*{}*\n{}".format(
-                word.title(),
-                results["lexicalCategory"],
-                entries["definitions"][0]
-            ))
-        else:
-            await self.bot.say("No results.")
+                word, word_type, word_def)
+            )
 
     @commands.command()
     async def syn(self, word: str):
