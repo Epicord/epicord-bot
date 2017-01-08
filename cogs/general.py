@@ -89,8 +89,9 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
                 "Absolutely not.",
                 "No chance."
             ]
-        await self.bot.reply('`{}`: {}'.format(':crystal_ball: '.join(q),
-                                               random.choice(answers)))
+        await self.bot.reply(
+            ':crystal_ball: `{}`: {}'.format(' '.join(q),
+                                             random.choice(answers)))
 
     @commands.command(name='8user',
                       brief='Given a question, randomly select a user.')
