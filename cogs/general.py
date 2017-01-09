@@ -14,6 +14,7 @@ class General:
     def __init__(self, bot):
         """Cog constructor."""
         self.bot = bot
+        self.poll_running = False
         asyncio.get_event_loop().call_soon(self._anime_auth)
 
     @commands.command(aliases=["choose"])
@@ -89,6 +90,7 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
                 "Absolutely not.",
                 "No chance."
             ]
+            q[0] = ""
         await self.bot.reply(
             ':crystal_ball: `{}`: {}'.format(' '.join(q),
                                              random.choice(answers)))
@@ -204,11 +206,20 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
 
     @commands.command(pass_context=True)
     async def say(self, ctx):
-        """Repeat passed message."""
+        """Repeat a passed message."""
         repeat = ctx.message.content[4:]
         if repeat.startswith("~"):
             print(repeat[1:])
         await self.bot.say(repeat)
+
+    # @commands.command(aliases=["poll"], pass_context=True)
+    # async def vote(self, ctx, *arg):
+    #     """Create a poll to vote on."""
+    #     auth = ctx.message.author
+    #     if self.poll_running:
+    #         await self.bot.reply("ERROR: There's already a poll running!")
+
+
 
 
 def setup(bot):
