@@ -35,12 +35,16 @@ class Language:
             word_type = entry.find("fl").text
             word_def = entry.find("def").find("dt").text
 
-            if word_type == "adverb":
-                word_def = entry.find("def").findall("dt")[1].text
+            try:
+                if word_def == ":":
+                    word_def = entry.find("def").findall("dt")[1].text
 
-            await self.bot.say("**{}**\n*{}*\n{}".format(
-                word, word_type, word_def)
-            )
+                await self.bot.say("**{}**\n*{}*\n{}".format(
+                    word, word_type, word_def)
+                )
+            except IndexError:
+                continue
+
 
     @commands.command()
     async def syn(self, word: str):
