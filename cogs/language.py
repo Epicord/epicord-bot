@@ -27,15 +27,32 @@ class Language:
         response = requests.get(url)
         results = ElementTree.fromstring(response.text)
 
+        """
+        Tag descriptions:
+
+        entry_list - root
+        entry - ( ͡° ͜ʖ ͡°)
+        fl - word type
+        def - contains date and definitions
+        dt - sub tag of def, contains definitions
+
+        suggestion - returns if the word can't be found
+        """
+
+        suggestions = []
+
         for entry in islice(results, 0, 3):
+            # Add suggestions to list if the word isn't found
             if entry.tag == "suggestion":
-                await self.bot.say("That's not a word")
-                break
+                suggestions.append(entry.text)
+                continue
             word = entry.find("ew").text
             word_type = entry.find("fl").text
             word_def = entry.find("def").find("dt").text
 
             try:
+                # First definition sometimes returns blank results for some
+                # reason, skipping to the next description tag fixes it.
                 if word_def == ":":
                     word_def = entry.find("def").findall("dt")[1].text
 
@@ -45,6 +62,12 @@ class Language:
             except IndexError:
                 continue
 
+        if suggestions:
+            await self.bot.say(
+                "That's not a word, maybe you meant: {}".format(
+                    ", ".join(suggestions)
+                )
+            )
 
     @commands.command()
     async def syn(self, word: str):
