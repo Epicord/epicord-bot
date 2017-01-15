@@ -81,7 +81,7 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             ':^(',
             '>///<'
         ]
-        if q[0] == "strict":
+        if len(q) != 0 and q[0] == "strict":
             answers = [
                 "Yes.",
                 "Absolutely.",
@@ -90,7 +90,7 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
                 "Absolutely not.",
                 "No chance."
             ]
-            q[0] = ""
+            q = q[1:]
         await self.bot.reply(
             ':crystal_ball: `{}`: {}'.format(' '.join(q),
                                              random.choice(answers)))
