@@ -55,7 +55,7 @@ class NSFW:
             except IndexError:
                 await self.bot.say("Sorry, no results.")
 
-    @commands.command()
+    @commands.command(aliases=["gel"])
     async def gelbooru(self, *tags: str):
         """
         For all your non-furry porn needs
@@ -85,7 +85,7 @@ class NSFW:
             else:
                 direct_url = "{}".format(selected_post.attrib["file_url"])
 
-            await self.bot.say("""{}
+            await self.bot.say("""http:{}
 <http://gelbooru.com/index.php?page=post&s=view&id={}>""".format(
                 direct_url,
                 selected_post.attrib["id"]
