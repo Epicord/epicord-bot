@@ -117,6 +117,16 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
                 break
         await self.bot.reply('`{}`: {}'.format(' '.join(q), user.display_name))
 
+    @commands.command(name='8notbot')
+    async def eightnotbot(self, *q: str):
+        """Given a question, randomly select an online user that isn't a bot."""
+        member_list = list(self.bot.get_all_members())
+        while True:
+            user = random.choice(member_list)
+            if user.status == user.status.online and user.bot == false
+                break
+        await self.bot.replay('`{}`: {}'.format(' '.join(q), user.display_name))
+
     @commands.command(name='8date')
     async def eightdate(self, *args: str):
         """Generate a random date."""
