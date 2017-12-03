@@ -6,7 +6,7 @@ import requests
 from discord.ext import commands
 
 ORDMAX = date(2100, 12, 31).toordinal()
-
+ORDMIN = date(0, 1, 1).toordinal()
 
 class General:
     """Commands that don't fit anywhere else."""
@@ -142,6 +142,8 @@ I choose: {}!""".format(choice_str, random.choice(choice_list)))
             for item in yearlist:
                 if item > 9999 or item < 1:
                     await self.bot.reply("ERROR: Years must be 1-9999.")
+        else:
+            ans = date.fromordinal(random.randint(ORDMIN, ORDMAX))
         if (len(yearlist) == 0):
             ans = date.fromordinal(random.randint(ord_today, ORDMAX))
         elif (len(yearlist) == 1):
